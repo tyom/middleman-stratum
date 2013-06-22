@@ -1,0 +1,17 @@
+// box-sizing
+// ----------
+
+// Vendor prefixes:
+// - Firefox: 1+
+// - Android < 3
+// - iOS < 4.3
+
+// No prefixes
+// - Chrome
+// - Opera
+// - IE 8+
+// - Safari 5.1+
+
+@mixin box-sizing($value) {
+  @include vendor-prefix(box-sizing, $value, moz webkit spec);
+}

@@ -1,0 +1,69 @@
+// Generate CSS triangles
+// ----------------------
+
+// $size can be:
+// one value - base; sides are created 2/3 of base length
+// two values - base and two sides (e.g. 12px 10px)
+// three values - base and each side (e.g. 12px 4px 7px; base left right)
+
+@mixin triangle($position: top, $color: black, $size: 16px) {
+  $-dimensions: null;
+  $-colors: null;
+  $-base: nth($size, 1);
+  $-left: $-base / 1.5;
+  $-right: $-base / 1.5;
+
+  // sides width specified
+  @if length($size) == 2 {
+    $-left: nth($size, 2);
+    $-right: nth($size, 2);
+  // individual side widths specified
+  } @else if length($size) == 3 {
+    $-left: nth($size, 2);
+    $-right: nth($size, 3);
+  }
+
+  @if $position == top {
+    $-dimensions: 0 $-right $-base $-left;
+    $-colors: transparent transparent $color;
+  }
+  @if $position == top-right {
+    $-dimensions: 0 $-base $-base 0;
+    $-colors: transparent $color transparent transparent;
+  }
+  @if $position == right {
+    $-dimensions: $-left 0 $-right $-base;
+    $-colors: transparent transparent transparent $color;
+  }
+  @if $position == bottom-right {
+    $-dimensions: 0 0 $-base $-base;
+    $-colors: transparent transparent $color;
+  }
+  @if $position == bottom {
+    $-dimensions: $-base $-left 0 $-right;
+    $-colors: $color transparent transparent;
+  }
+  @if $position == bottom-left {
+    $-dimensions: $-base 0 0 $-base;
+    $-colors: transparent transparent transparent $color;
+  }
+  @if $position == left {
+    $-dimensions: $-left $-base $-right 0;
+    $-colors: transparent $color transparent transparent;
+  }
+  @if $position == top-left {
+    $-dimensions: $-base $-base 0 0;
+    $-colors: $color transparent transparent transparent;
+  }
+
+  @if $-dimensions and $-colors {
+    @include box(0px);
+    display: inline-block;
+    border-style: solid;
+    border-width: $-dimensions;
+    border-color: $-colors;
+  } @else {
+    @warn "Unrecognised position '#{$position}'. Use one of: top, top-right, right, bottom-right, bottom, bottom-left, left, top-left";
+  }
+}
+
