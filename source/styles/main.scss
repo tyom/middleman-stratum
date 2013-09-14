@@ -4,6 +4,24 @@
 
 @import "reset";
 
+html,
+body {
+    height: 100%;
+}
+
 body {
   background: #ddd;
+}
+
+.page {
+    @include box(100%);
+    display: table;
+
+    h1 {
+        display: table-cell;
+        text-align: center;
+        vertical-align: middle;
+        color: #777;
+        font: 200 2em Helvetica, sans-serif;
+    }
 }
